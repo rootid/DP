@@ -1,8 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 
 #713,6,continue
 #choose org.apache.maven.archetypes:maven-archetype-quickstart type project
+OLD_PWD=${PWD}
+SRC_LST=(Creational Structural Behvioral)
+
 generate () {
 mvn archetype:generate \
   -DgroupId=${_groupId} \
@@ -17,27 +20,29 @@ compile() {
 }
 
 run() {
-  cd ${PWD}
+  cd ${OLD_PWD}
   cd ${src_dir}
   java -cp target/${_artifactId}-${_version}.jar ${_classname}
-  #java -cp target/simple-1.0-SNAPSHOT.jar org.sonatype.mavenbook.App
 }
 
-_artifactId=simple
-_version=1.0-SNAPSHOT
-_groupId=org.sonatype.mavenbook
-_package=org.sonatype.mavenbook
-_classname=org.sonatype.mavenbook.App
 
+#set -x
+for type_ in ${SRC_LST[@]}
+do
+  pkg_="org.vi."
+  l_type=`echo ${type_} | tr '[:upper:]' [':lower:]'`
+  pkg_+=${l_type}
+  _artifactId=${type_}
+  _version=1.0-SNAPSHOT
+  _groupId=${pkg_}
+  _package=${pkg_}
+  _classname=${pkg_}.App
+  src_dir=${_artifactId}
+  generate 
+  compile
+  run
+  cd ${OLD_PWD}
+done
 
-_artifactId=Observe
-_version=1.0-SNAPSHOT
-_groupId=org.vi.observer
-_package=org.vi.observer
-_classname=org.vi.observer.Init
+exit 0
 
-src_dir=${_artifactId}
-
-#generate 
-compile
-#run

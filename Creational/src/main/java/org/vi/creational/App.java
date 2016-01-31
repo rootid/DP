@@ -1,4 +1,4 @@
-package org.vi.observer;
+package org.vi.creational;
 
 /**
  * Hello world!
@@ -10,5 +10,4 @@ public class App
     {
         System.out.println( "Hello World!" );
     }
-
 }
