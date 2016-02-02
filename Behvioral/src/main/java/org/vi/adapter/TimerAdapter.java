@@ -14,7 +14,7 @@ public class TimerAdapter implements Event {
     }
 
     public void stop() {
-        timer.destory()
+        timer.destory();
     }
 
     public void configure() {
